@@ -1,10 +1,12 @@
 package com.websarva.wings.android.fragmentsample1
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleAdapter
 
@@ -20,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class MenuListFragment : Fragment() {
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
+    //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        setHasOptionsMenu(true)
 //    }
@@ -61,4 +63,22 @@ class MenuListFragment : Fragment() {
         // インフレートされた画面を戻り地として返す
         return view
     }
+
+    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+        override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            //タップされた行のデータを取得
+            val item = parent.getItemAtPosition(position) as MutableMap<String, String>
+            //定食名と金額取得
+            val menuName = item["name"]
+            val menuPrice = item["price"]
+            val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java).apply {
+                putExtra("menuName", menuName)
+                putExtra("menuPrice", menuPrice)
+            }
+
+            //第２画面の起動
+            startActivity(intent2MenuThanks)
+        }
+    }
+
 }
