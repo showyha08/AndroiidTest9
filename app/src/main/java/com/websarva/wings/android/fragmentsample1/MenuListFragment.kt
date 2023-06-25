@@ -10,50 +10,9 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MenuListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MenuListFragment : Fragment() {
 
     private var _isLayoutXLarge = true
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        // 親クラスのメソッド呼び出し
-        super.onActivityCreated(savedInstanceState)
-
-        //自分が所属するアクティビティからmenuThanksFrameを取得
-        val menuThanksFrame = activity?.findViewById<View>(R.id.menuThanksFrame)
-        //menuThanksFrameがnull,つまり存在しないなら...
-        if (menuThanksFrame == null) {
-            //画面判定フラグを通常画面とする
-            _isLayoutXLarge = false
-        }
-
-    }
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        //親クラスのonCreate()の呼び出し
-//        super.onCreate(savedInstanceState)
-//        //フラグメントマネージャーからメニューリストフラグメントを取得
-//        val menuListFragment: Fragment? = fragmentManager?.findFragmentById(R.id.fragmentMenuList)
-//        //メニューリストフラグメントがnull、つまり存在しないなら...
-//        if (menuListFragment == null) {
-//            //画面判定フラグを通常画面とする
-//            _isLayoutXLarge = false
-//        }
-//    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,6 +55,20 @@ class MenuListFragment : Fragment() {
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        // 親クラスのメソッド呼び出し
+        super.onActivityCreated(savedInstanceState)
+
+        //自分が所属するアクティビティからmenuThanksFrameを取得
+        val menuThanksFrame = activity?.findViewById<View>(R.id.menuThanksFrame)
+        //menuThanksFrameがnull,つまり存在しないなら...
+        if (menuThanksFrame == null) {
+            //画面判定フラグを通常画面とする
+            _isLayoutXLarge = false
+        }
+
+    }
+
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
         override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             //タップされた行のデータを取得
@@ -131,14 +104,6 @@ class MenuListFragment : Fragment() {
                 startActivity(intent2MenuThanks)
             }
 
-
-//            val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java).apply {
-//                putExtra("menuName", menuName)
-//                putExtra("menuPrice", menuPrice)
-//            }
-//
-//            //第２画面の起動
-//            startActivity(intent2MenuThanks)
         }
     }
 
