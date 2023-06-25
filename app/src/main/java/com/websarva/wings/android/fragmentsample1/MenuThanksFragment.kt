@@ -22,15 +22,15 @@ class MenuThanksFragment : Fragment() {
 
     private var _isLayoutXLarge = true
 
-    override fun onCreate(savedInstanceState:Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         //親クラスのonCreate()の呼び出し
         super.onCreate(savedInstanceState)
         //フラグメントマネージャーからメニューリストフラグメントを取得
-        val menuListFragment:Fragment? = fragmentManager?.findFragmentById(R.id.fragmentMenuList)
+        val menuListFragment: Fragment? = fragmentManager?.findFragmentById(R.id.fragmentMenuList)
         //メニューリストフラグメントがnull、つまり存在しないなら...
-        if(menuListFragment == null){
+        if (menuListFragment == null) {
             //画面判定フラグを通常画面とする
-            _isLayoutXLarge= false
+            _isLayoutXLarge = false
         }
     }
 
@@ -39,11 +39,27 @@ class MenuThanksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        //フラグメントで表示する画面をXMLからインフレート
         val view = inflater.inflate(R.layout.fragment_menu_thanks, container, false)
+
+        //Bundleオブジェクトを宣言
+        val extras: Bundle?
+
+        //大画面の場合
+        if (_isLayoutXLarge) {
+            //このフラグメントに埋め込まれた引き継ぎデータを取得
+            extras = arguments
+        } else { //通常画面の場合
+            //所属アクティビティからインテントを取得
+            val intent = activity?.intent
+            //インテントから引き継ぎデータをまとめたもの（Bundle）を取得
+            extras = intent?.extras
+        }
+
         // 所属アクティビティからインテントを取得
-        val intent = activity?.intent
+        //val intent = activity?.intent
         // インテントから引き継ぎデータをまとめたもの(Bundleオブジェクト)を取得
-        val extras = intent?.extras
+        //val extras = intent?.extras
         // 定食と金額を取得
         val menuName = extras?.getString("menuName")
         val menuPrice = extras?.getString("menuPrice")
