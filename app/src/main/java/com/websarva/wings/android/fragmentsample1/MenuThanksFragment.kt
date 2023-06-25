@@ -81,8 +81,20 @@ class MenuThanksFragment : Fragment() {
     // ボタンが押されたときの処理が記述されたメンバクラス
     private inner class ButtonClickListener : View.OnClickListener {
         override fun onClick(view: View) {
-            //自分が所属するアクティビティを終了
-            activity?.finish()
+
+            //大画面の場合
+            if (_isLayoutXLarge) {
+                //フラグメントトランザクションの開始
+                val transaction = fragmentManager?.beginTransaction()
+                //自分自身を削除
+                transaction?.remove(this@MenuThanksFragment)
+                //フラグメントトランザクションのコミット
+                transaction?.commit()
+            } else { //通常画面の場合
+                //自分が所属するアクティビティを終了
+                activity?.finish()
+            }
+
         }
     }
 
