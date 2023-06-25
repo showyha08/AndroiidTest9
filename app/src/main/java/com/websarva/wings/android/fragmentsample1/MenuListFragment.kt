@@ -22,10 +22,39 @@ private const val ARG_PARAM2 = "param2"
  */
 class MenuListFragment : Fragment() {
 
-    //    override fun onCreate(savedInstanceState: Bundle?) {
+    private var _isLayoutXLarge = true
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        // 親クラスのメソッド呼び出し
+        super.onActivityCreated(savedInstanceState)
+
+        //自分が所属するアクティビティからmenuThanksFrameを取得
+        val menuThanksFrame = activity?.findViewById<View>(R.id.menuThanksFrame)
+        //menuThanksFrameがnull,つまり存在しないなら...
+        if (menuThanksFrame == null) {
+            //画面判定フラグを通常画面とする
+            _isLayoutXLarge = false
+        }
+
+    }
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        //親クラスのonCreate()の呼び出し
 //        super.onCreate(savedInstanceState)
-//        setHasOptionsMenu(true)
+//        //フラグメントマネージャーからメニューリストフラグメントを取得
+//        val menuListFragment: Fragment? = fragmentManager?.findFragmentById(R.id.fragmentMenuList)
+//        //メニューリストフラグメントがnull、つまり存在しないなら...
+//        if (menuListFragment == null) {
+//            //画面判定フラグを通常画面とする
+//            _isLayoutXLarge = false
+//        }
 //    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,13 +103,42 @@ class MenuListFragment : Fragment() {
             //定食名と金額取得
             val menuName = item["name"]
             val menuPrice = item["price"]
-            val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java).apply {
-                putExtra("menuName", menuName)
-                putExtra("menuPrice", menuPrice)
+
+            // 引き継ぎデータをまとめてBundle
+            val bundle = Bundle()
+            //Bundleオブジェクトに引き継ぎデータを書くの
+            bundle.putString("menuName", menuName)
+            bundle.putString("menuPrice", menuPrice)
+
+            //大画面の場合
+            if (_isLayoutXLarge) {
+                //フラグメントトランザクションの開始
+                val transaction = fragmentManager?.beginTransaction()
+                //注文完了フラグメントを生成
+                val menuThanksFragment = MenuThanksFragment()
+                //引き継ぎデータを注文完了フラグメントに格納
+                menuThanksFragment.arguments = bundle
+                //生成した注文完了フラグメントをmenuThanksFrameレイアウト部品に追加
+                transaction?.replace(R.id.menuThanksFrame, menuThanksFragment)
+                //フラグメントトランザクションコミット
+                transaction?.commit()
+            } else { //通常画面の場合
+                //インテントオブジェクトを生成
+                val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java)
+                //第二画面に送るデータを格納
+                intent2MenuThanks.putExtras(bundle)
+                //第二画面の起動
+                startActivity(intent2MenuThanks)
             }
 
-            //第２画面の起動
-            startActivity(intent2MenuThanks)
+
+//            val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java).apply {
+//                putExtra("menuName", menuName)
+//                putExtra("menuPrice", menuPrice)
+//            }
+//
+//            //第２画面の起動
+//            startActivity(intent2MenuThanks)
         }
     }
 

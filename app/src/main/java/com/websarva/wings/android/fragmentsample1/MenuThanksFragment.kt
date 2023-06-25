@@ -8,18 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MenuThanksFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MenuThanksFragment : Fragment() {
 
+    //大画面かどうか
     private var _isLayoutXLarge = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,10 +47,10 @@ class MenuThanksFragment : Fragment() {
             extras = intent?.extras
         }
 
-        // 所属アクティビティからインテントを取得
-        //val intent = activity?.intent
-        // インテントから引き継ぎデータをまとめたもの(Bundleオブジェクト)を取得
-        //val extras = intent?.extras
+//        // 所属アクティビティからインテントを取得
+//        val intent = activity?.intent
+//        // インテントから引き継ぎデータをまとめたもの(Bundleオブジェクト)を取得
+//        val extras = intent?.extras
         // 定食と金額を取得
         val menuName = extras?.getString("menuName")
         val menuPrice = extras?.getString("menuPrice")
