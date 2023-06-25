@@ -58,7 +58,6 @@ class MenuListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         // 親クラスのメソッド呼び出し
         super.onActivityCreated(savedInstanceState)
-
         //自分が所属するアクティビティからmenuThanksFrameを取得
         val menuThanksFrame = activity?.findViewById<View>(R.id.menuThanksFrame)
         //menuThanksFrameがnull,つまり存在しないなら...
@@ -66,7 +65,6 @@ class MenuListFragment : Fragment() {
             //画面判定フラグを通常画面とする
             _isLayoutXLarge = false
         }
-
     }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
