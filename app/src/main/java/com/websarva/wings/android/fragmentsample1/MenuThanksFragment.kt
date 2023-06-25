@@ -20,6 +20,20 @@ private const val ARG_PARAM2 = "param2"
  */
 class MenuThanksFragment : Fragment() {
 
+    private var _isLayoutXLarge = true
+
+    override fun onCreate(savedInstanceState:Bundle?){
+        //親クラスのonCreate()の呼び出し
+        super.onCreate(savedInstanceState)
+        //フラグメントマネージャーからメニューリストフラグメントを取得
+        val menuListFragment:Fragment? = fragmentManager?.findFragmentById(R.id.fragmentMenuList)
+        //メニューリストフラグメントがnull、つまり存在しないなら...
+        if(menuListFragment == null){
+            //画面判定フラグを通常画面とする
+            _isLayoutXLarge= false
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
